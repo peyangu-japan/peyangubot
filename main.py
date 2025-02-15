@@ -35,7 +35,7 @@ async def setup_hook() -> None:
         if cog.endswith(".py"):
             await bot.load_extension(f"cogs.{cog[:-3]}")
     await bot.tree.sync()
-    print("Cogの読み込みとスラッシュコマンドの同期に成功しました。")
+    print("Load Cog and sync slash commands successfully.")
 
 @bot.command(name="reload")
 @bot.is_owner()
