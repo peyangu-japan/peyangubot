@@ -14,11 +14,17 @@ async def on_message(message: discord.Message):
     if message.author.bot:
         return
 
-    if message.content == "おはよう":
+    if "おはよ" in message.content:
         await message.reply("おはよ！")
         return
-    elif message.content == "おやすみ":
+    elif "おやす" in message.content:
         await message.reply("おやすみ！ねんねしてね！")
+        return
+    elif "ひま" in message.content:
+        await message.reply("私もいつも暇ですよ。それでもユーザーを楽しませるのは忙しいですけどね。")
+        return
+    elif "暇" in message.content:
+        await message.reply("私もいつも暇ですよ。それでもユーザーを楽しませるのは忙しいですけどね。")
         return
 
     bot.process_commands(message)
