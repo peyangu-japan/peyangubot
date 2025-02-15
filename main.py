@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import os
+import keep_alive
 
 bot = commands.Bot(command_prefix="pa!", intents=discord.Intents.all(), help_command=None)
 
