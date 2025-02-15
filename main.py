@@ -37,4 +37,10 @@ async def reload(ctx: commands.Context, cogname: str):
     await bot.reload_extension(f"cogs.{cogname}")
     await ctx.reply("再読み込みしました。")
 
+@bot.command(name="load")
+@bot.is_owner()
+async def load(ctx: commands.Context, cogname: str):
+    await bot.load_extension(f"cogs.{cogname}")
+    await ctx.reply("読み込みました。")
+
 bot.run("Token")
