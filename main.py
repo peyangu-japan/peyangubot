@@ -49,4 +49,5 @@ async def load(ctx: commands.Context, cogname: str):
     await bot.load_extension(f"cogs.{cogname}")
     await ctx.reply("cogs:{cogname}\nLoaded.")
 
+keep_alive()
 bot.run("Token")
