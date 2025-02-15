@@ -23,5 +23,9 @@ class SearchCog(commands.Cog):
             embed.set_thumbnail(url=user.default_avatar.url)
         await ctx.reply(embed=embed)
 
+    @commands.command(name="google")
+    async def google_search(self, ctx:commands.Context, word: str):
+        await ctx.reply(f"https://www.google.com/search?q={word.replace(" ", "+")}")
+
 async def setup(bot):
     await bot.add_cog(SearchCog(bot))
