@@ -7,7 +7,7 @@ bot = commands.Bot(command_prefix="pa!", intents=discord.Intents.all(), help_com
 
 @bot.event
 async def on_ready():
-    print('ログインしました')
+    print('Logged in.')
     await bot.change_presence(activity=discord.Game(name=f"{len(bot.guilds)}サーバー"))
 
 @bot.event
