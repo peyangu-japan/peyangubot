@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 import asyncio
 
-class HelloCog(commands.Cog):
+class GreetingsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         print(f"init -> GreetingsCog")
