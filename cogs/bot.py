@@ -9,7 +9,7 @@ class BotCog(commands.Cog):
 
     @commands.command(name="invite")
     async def invite_bot(self, ctx: commands.Context):
-        await ctx.reply("Botの導入リンク:\nhttps://discord.com/oauth2/authorize?client_id=1283362010985140224。")
+        await ctx.reply("Botの導入リンク:\nhttps://discord.com/oauth2/authorize?client_id=1283362010985140224")
 
 async def setup(bot):
     await bot.add_cog(BotCog(bot))

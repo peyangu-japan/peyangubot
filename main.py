@@ -31,12 +31,12 @@ async def setup_hook() -> None:
 @commands.is_owner()
 async def reload(ctx: commands.Context, cogname: str):
     await bot.reload_extension(f"cogs.{cogname}")
-    await ctx.reply("cogs:{cogname}\nReloaded.")
+    await ctx.reply(f"cogs:{cogname}\nReloaded.")
 
 @bot.command(name="load")
 @commands.is_owner()
 async def load(ctx: commands.Context, cogname: str):
     await bot.load_extension(f"cogs.{cogname}")
-    await ctx.reply("cogs:{cogname}\nLoaded.")
+    await ctx.reply(f"cogs:{cogname}\nLoaded.")
 
 bot.run("Token")
