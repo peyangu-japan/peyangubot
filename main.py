@@ -41,7 +41,7 @@ async def load(ctx: commands.Context, cogname: str):
 
 @bot.command(name="shutdown")
 @commands.is_owner()
-    await ctx.reply(f"shutting down...")
+    await ctx.reply("Shutting down...")
     await bot.close()
 
 bot.run("Token")
