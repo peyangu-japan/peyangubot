@@ -1,8 +1,18 @@
 import discord
 from discord.ext import commands
 import os
+import aiosqlite # pip install aiosqlite
 
-bot = commands.Bot(command_prefix="pa!", intents=discord.Intents.all(), help_command=None)
+class PeyanguBot(commands.AutoShardedBot):
+    def __init__(self):
+        super().__init__(
+            command_prefix="pa!",
+            help_command=None,
+            intents=discord.Intents.all(),
+        )
+        print("InitDone")
+
+bot = PeyanguBot()
 
 @bot.event
 async def on_ready():
