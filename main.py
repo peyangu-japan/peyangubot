@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import os
-import keep_alive
 
 bot = commands.Bot(command_prefix="pa!", intents=discord.Intents.all(), help_command=None)
 
@@ -30,5 +29,4 @@ async def load(ctx: commands.Context, cogname: str):
     await bot.load_extension(f"cogs.{cogname}")
     await ctx.reply("cogs:{cogname}\nLoaded.")
 
-keep_alive()
 bot.run("Token")
