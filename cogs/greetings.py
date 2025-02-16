@@ -5,7 +5,7 @@ import asyncio
 class HelloCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        print(f"init -> HelloCog")
+        print(f"init -> GreetingsCog")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -26,4 +26,4 @@ class HelloCog(commands.Cog):
             return
 
 async def setup(bot):
-    await bot.add_cog(HelloCog(bot))
+    await bot.add_cog(GreetingｓCog(bot))
