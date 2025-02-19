@@ -31,36 +31,36 @@ class GlobalCog(commands.Cog):
         if "<sound:" in message.content:
             return
 
-        conn = await aiosqlite.connect("database.db")
-        cursor = await conn.cursor()
+        async with aiosqlite.connect("database.db") as conn:  # データベース接続をコンテキストマネージャーで管理
+            async with conn.cursor() as cursor:
+                await cursor.execute("SELECT * FROM global_chat WHERE guild_id = ? AND channel_id = ?", (message.guild.id, message.channel.id))
+                result = await cursor.fetchone()
 
-        try:
+                if result:
+                    await cursor.execute("SELECT * FROM global_chat")
+                    rows = await cursor.fetchall()
 
-            await cursor.execute("SELECT * FROM global_chat WHERE guild_id = ? AND channel_id = ?", (message.guild.id, message.channel.id))
-            result = await cursor.fetchone()
+                    for row in rows:
+                        guild_id = row[0]
+                        channel_id = row[1]
+                        channel = self.bot.get_channel(channel_id)
 
-            if result:
-                for row in await cursor.execute("SELECT * FROM global_chat"):
-                    guild_id = row[0]
-                    channel_id = row[1]
-                    channel = self.bot.get_channel(channel_id)
+                        if channel != message.channel:
+                            try:
+                                webhooks = await channel.webhooks()
+                                webhook = next((w for w in webhooks if w.name == "GlobalChatWebhook"), None)
+                                if webhook is None:
+                                    webhook = await channel.create_webhook(name="GlobalChatWebhook")
 
-                    webhooks = await channel.webhooks()
-                    webhook = next((w for w in webhooks if w.name == "GlobalChatWebhook"), None)
-                    if webhook is None:
-                        webhook = await channel.create_webhook(name="GlobalChatWebhook")
+                                await webhook.send(
+                                    content=f"{message.content}",
+                                    username=message.author.name,
+                                    avatar_url=message.author.avatar.url if message.author.avatar else None
+                                )
+                            except Exception as e:
+                                print(f"Webhookエラー: {e}")
 
-                    await webhook.send(
-                        content=f"{message.content}",
-                        username=message.author.name,
-                        avatar_url=message.author.avatar.url if message.author.avatar else None
-                    )
-
-                    await asyncio.sleep(2)
-            await cursor.close()
-            await conn.close()
-        except:
-            return print(f"{sys.exc_info()}")
+                            await asyncio.sleep(0.5)
         
 
     @commands.group(name="global")
