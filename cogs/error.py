@@ -12,8 +12,7 @@ class ErrorCog(commands.Cog):
             a = None
             return a
         elif isinstance(error, commands.NotOwner):
-            a = None
-            return a
+            await ctx.reply(embed=discord.Embed(title="予期しないエラーが発生しました。", description=f"```{error}```", color=discord.Color.red()))
 
 async def setup(bot):
     await bot.add_cog(ErrorCog(bot))

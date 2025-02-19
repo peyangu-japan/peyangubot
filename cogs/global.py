@@ -33,29 +33,33 @@ class GlobalCog(commands.Cog):
         conn = await aiosqlite.connect("database.db")
         cursor = await conn.cursor()
 
-        await cursor.execute("SELECT * FROM global_chat WHERE guild_id = ? AND channel_id = ?", (message.guild.id, message.channel.id))
-        result = await cursor.fetchone()
+        try:
 
-        if result:
-            for row in cursor.execute("SELECT * FROM global_chat"):
-                guild_id = row[0]
-                channel_id = row[1]
-                channel = self.bot.get_channel(channel_id)
+            await cursor.execute("SELECT * FROM global_chat WHERE guild_id = ? AND channel_id = ?", (message.guild.id, message.channel.id))
+            result = await cursor.fetchone()
 
-                webhooks = await channel.webhooks()
-                webhook = next((w for w in webhooks if w.name == "GlobalChatWebhook"), None)
-                if webhook is None:
-                    webhook = await channel.create_webhook(name="GlobalChatWebhook")
+            if result:
+                for row in cursor.execute("SELECT * FROM global_chat"):
+                    guild_id = row[0]
+                    channel_id = row[1]
+                    channel = self.bot.get_channel(channel_id)
 
-                await webhook.send(
-                    content=f"{message.content}",
-                    username=message.author.name,
-                    avatar_url=message.author.avatar.url if message.author.avatar else None
-                )
+                    webhooks = await channel.webhooks()
+                    webhook = next((w for w in webhooks if w.name == "GlobalChatWebhook"), None)
+                    if webhook is None:
+                        webhook = await channel.create_webhook(name="GlobalChatWebhook")
 
-                await asyncio.sleep(2)
-        await cursor.close()
-        await conn.close()
+                    await webhook.send(
+                        content=f"{message.content}",
+                        username=message.author.name,
+                        avatar_url=message.author.avatar.url if message.author.avatar else None
+                    )
+
+                    await asyncio.sleep(2)
+            await cursor.close()
+            await conn.close()
+        except:
+            return
         
 
     @commands.group(name="global")
