@@ -28,6 +28,14 @@ class GlobalCog(commands.Cog):
             return
         if "x.gd" in message.content:
             return
+        if "is.gd" in message.content:
+            return
+        if "v.gd" in message.content:
+            return
+        if "tinyurl.com" in message.content:
+            return
+        if "rb.gy" in message.content:
+            return
         if "<sound:" in message.content:
             return
 
@@ -53,12 +61,12 @@ class GlobalCog(commands.Cog):
                                     webhook = await channel.create_webhook(name="GlobalChatWebhook")
 
                                 await webhook.send(
-                                    content=f"{message.content}",
-                                    username=message.author.name,
+                                    content=f"{message.content}\n-# mID:{message.id}",
+                                    username=f"{message.author.display_name}(@{message.author.name} - {message.author.id}) | {message.guild.name}",
                                     avatar_url=message.author.avatar.url if message.author.avatar else None
                                 )
                             except Exception as e:
-                                print(f"Webhookエラー: {e}")
+                                print(f"Webhook error: {e}")
 
                             await asyncio.sleep(0.5)
         
@@ -81,7 +89,7 @@ class GlobalCog(commands.Cog):
         await conn.commit()
         await cursor.close()
         await conn.close()
-        await ctx.reply("グローバルチャットを有効化しました。")
+        await ctx.reply("グローバルチャットをオンにしました。")
         return
 
     @global_.command(name="deactivate")
@@ -98,7 +106,7 @@ class GlobalCog(commands.Cog):
         await conn.commit()
         await cursor.close()
         await conn.close()
-        await ctx.reply("グローバルチャットを無効化しました。")
+        await ctx.reply("グローバルチャットをオフにしました。")
         return
 
 async def setup(bot):
