@@ -33,6 +33,13 @@ class GlobalCog(commands.Cog):
         conn = await aiosqlite.connect("database.db")
         cursor = await conn.cursor()
 
+        await cursor.execute("""
+            CREATE TABLE IF NOT EXISTS global_chat (
+                guild_id INTEGER,
+                channel_id INTEGER
+            )
+        """)
+
         await cursor.execute("SELECT * FROM global_chat WHERE guild_id = ? AND channel_id = ?", (message.guild.id, message.channel.id))
         result = await cursor.fetchone()
 
