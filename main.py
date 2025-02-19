@@ -17,6 +17,16 @@ bot = PeyanguBot()
 @bot.event
 async def on_ready():
     print('Logged in.')
+    conn = await aiosqlite.connect("database.db")
+    cursor = await conn.cursor()
+    await cursor.execute("""
+        CREATE TABLE IF NOT EXISTS global_chat (
+            guild_id INTEGER,
+            channel_id INTEGER
+        )
+    """)
+    await cursor.close()
+    await conn.close()
     await bot.change_presence(activity=discord.Game(name=f"{len(bot.guilds)}サーバー"))
 
 @bot.event

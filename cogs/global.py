@@ -33,13 +33,6 @@ class GlobalCog(commands.Cog):
         conn = await aiosqlite.connect("database.db")
         cursor = await conn.cursor()
 
-        await cursor.execute("""
-            CREATE TABLE IF NOT EXISTS global_chat (
-                guild_id INTEGER,
-                channel_id INTEGER
-            )
-        """)
-
         await cursor.execute("SELECT * FROM global_chat WHERE guild_id = ? AND channel_id = ?", (message.guild.id, message.channel.id))
         result = await cursor.fetchone()
 
@@ -61,6 +54,8 @@ class GlobalCog(commands.Cog):
                 )
 
                 await asyncio.sleep(2)
+        await cursor.close()
+        await conn.close()
         
 
     @commands.group(name="global")
@@ -79,6 +74,8 @@ class GlobalCog(commands.Cog):
         """)
         await cursor.execute("INSERT INTO global_chat (guild_id, channel_id) VALUES (?, ?)", (ctx.guild.id, ctx.channel.id))
         await conn.commit()
+        await cursor.close()
+        await conn.close()
         await ctx.reply("グローバルチャットを有効化しました。")
         return
 
@@ -94,6 +91,8 @@ class GlobalCog(commands.Cog):
         """)
         await cursor.execute("DELETE FROM global_chat WHERE guild_id = ? AND channel_id = ?", (ctx.guild.id, ctx.channel.id))
         await conn.commit()
+        await cursor.close()
+        await conn.close()
         await ctx.reply("グローバルチャットを無効化しました。")
         return
 
