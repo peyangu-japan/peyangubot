@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord
 import aiosqlite
 import asyncio
+import sys
 
 class GlobalCog(commands.Cog):
     def __init__(self, bot):
@@ -59,7 +60,7 @@ class GlobalCog(commands.Cog):
             await cursor.close()
             await conn.close()
         except:
-            return
+            return print(f"{sys.exc_info()}")
         
 
     @commands.group(name="global")
