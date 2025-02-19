@@ -39,7 +39,7 @@ class GlobalCog(commands.Cog):
             result = await cursor.fetchone()
 
             if result:
-                async for row in cursor.execute("SELECT * FROM global_chat"):
+                for row in await cursor.execute("SELECT * FROM global_chat"):
                     guild_id = row[0]
                     channel_id = row[1]
                     channel = self.bot.get_channel(channel_id)
