@@ -60,6 +60,16 @@ class GlobalCog(commands.Cog):
                                 if webhook is None:
                                     webhook = await channel.create_webhook(name="GlobalChatWebhook")
 
+                                if message.reference:
+                                    msg = await message.channel.fetch_message(message.reference.message_id)
+                                    await webhook.send(
+                                        content=f"{message.content}\n-# mID:{message.id}",
+                                        username=f"{message.author.display_name}(@{message.author.name} - {message.author.id}) | {message.guild.name}",
+                                        avatar_url=message.author.avatar.url if message.author.avatar else None,
+                                        embed=discord.Embed(title="返信", description=f"{msg.content}")
+                                    )
+                                    continue
+
                                 await webhook.send(
                                     content=f"{message.content}\n-# mID:{message.id}",
                                     username=f"{message.author.display_name}(@{message.author.name} - {message.author.id}) | {message.guild.name}",
