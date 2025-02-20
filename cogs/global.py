@@ -116,6 +116,10 @@ class GlobalCog(commands.Cog):
         await conn.commit()
         await cursor.close()
         await conn.close()
+        webhooks = await ctx.channel.webhooks()
+        webhook = next((w for w in webhooks if w.name == "GlobalChatWebhook"), None)
+        if not webhook is None:
+            await webhook.delete()
         await ctx.reply("グローバルチャットをオフにしました。")
         return
 
