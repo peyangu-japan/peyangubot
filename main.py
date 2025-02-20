@@ -48,5 +48,18 @@ async def reload(ctx: commands.Context, cogname: str):
 async def load(ctx: commands.Context, cogname: str):
     await bot.load_extension(f"cogs.{cogname}")
     await ctx.reply(f"cogs:{cogname}\nLoaded.")
-    
+
+@bot.command(name="rebootserver")
+@commands.is_owner()
+async def shutdown(ctx):
+    await ctx.reply("Rebooting server...")
+    os.system('shutdown /r /f /t 0')
+    await bot.close()
+
+@bot.command(name="shutdown")
+@commands.is_owner()
+async def shutdown(ctx):
+    await ctx.reply("Shutting down...")
+    await bot.close()
+
 bot.run("Token")
