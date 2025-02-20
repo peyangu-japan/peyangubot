@@ -75,7 +75,7 @@ class GlobalCog(commands.Cog):
     async def global_(self, ctx: commands.Context):
         return
     
-    @global_.command(name="activate")
+    @global_.command(name="setup")
     async def global_activate(self, ctx: commands.Context):
         conn = await aiosqlite.connect("database.db")
         cursor = await conn.cursor()
@@ -92,7 +92,7 @@ class GlobalCog(commands.Cog):
         await ctx.reply("グローバルチャットをオンにしました。")
         return
 
-    @global_.command(name="deactivate")
+    @global_.command(name="disable")
     async def global_deactivate(self, ctx: commands.Context):
         conn = await aiosqlite.connect("database.db")
         cursor = await conn.cursor()
