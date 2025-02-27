@@ -66,7 +66,7 @@ class GlobalCog(commands.Cog):
                                         content=f"{message.content}\n-# mID:{message.id}",
                                         username=f"{message.author.display_name}(@{message.author.name} - {message.author.id}) | {message.guild.name}",
                                         avatar_url=message.author.avatar.url if message.author.avatar else None,
-                                        embed=discord.Embed(title="返信", description=f"{msg.content}")
+                                        embed=discord.Embed(title=f"{msg.author.name}", description=f"{msg.content}")
                                     )
                                     continue
 
